@@ -1,7 +1,11 @@
 package pet.park.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,12 +22,24 @@ import pet.park.service.ParkService;
 public class ParkController {
 	@Autowired
 	private ParkService parkService;
-	
+
 	@PostMapping("/contributor")
 	@ResponseStatus(code = HttpStatus.CREATED)
-	public ContributorData insertContributor(
-			@RequestBody ContributorData contributorData) {
+	public ContributorData insertContributor(@RequestBody ContributorData contributorData) {
 		log.info("Creating contributor {}", contributorData);
 		return parkService.saveContributor(contributorData);
 	}
+
+	@GetMapping("/contributor")
+	public List<ContributorData> retriveAllContributors() {
+		log.info("Retrieve all contributors called.");
+		return parkService.retrieveAllContributors();
+	} // (VIDEO 14-2 Retrieve contributors) -> method to return all contributors
+
+	@GetMapping("/contributor/{contributorId}")
+	public ContributorData retrieveContributorById(@PathVariable Long contributorId) {
+		log.info("Retrieving contributor with ID={}", contributorId);
+		return parkService.retrieveContributorById(contributorId);
+	} // (VIDEO 14-2 Retrieve contributors) -> method to retrieve one contributor at a
+		// time by ID
 }

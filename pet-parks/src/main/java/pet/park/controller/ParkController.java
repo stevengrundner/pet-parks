@@ -1,9 +1,11 @@
 package pet.park.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -32,12 +34,12 @@ public class ParkController {
 	}
 
 	@PutMapping("/contributor/{contributorId}")
-	public ContributorData updateContributor(@PathVariable Long contributorId, 
+	public ContributorData updateContributor(@PathVariable Long contributorId,
 			@RequestBody ContributorData contributorData) {
 		contributorData.setContributorId(contributorId);
 		log.info("Updating contributor {}", contributorData);
 		return parkService.saveContributor(contributorData);
-	} //(VIDEO 14-4 Update Controller) -> method to update a contributor 
+	} // (VIDEO 14-4 Update Controller) -> method to update a contributor
 
 	@GetMapping("/contributor")
 	public List<ContributorData> retriveAllContributors() {
@@ -51,4 +53,20 @@ public class ParkController {
 		return parkService.retrieveContributorById(contributorId);
 	} // (VIDEO 14-2 Retrieve contributors) -> method to retrieve one contributor at a
 		// time by ID
+
+	@DeleteMapping("/contributor")
+	public void deleteAllContributors() {
+		log.info("Attempting to delete all contributors");
+		throw new UnsupportedOperationException("Deleting all contributors is not allowed.");
+	} // (VIDEO 14-5 Delete Contributor) -> Preventing user from deleting all
+		// contributors
+
+	@DeleteMapping("/contributor/{contributorId}")
+	public Map<String, String> deleteContributorById(@PathVariable Long contributorId) {
+		log.info("Deleting contributor with ID =", contributorId);
+
+		parkService.deleteContributorById(contributorId);
+
+		return Map.of("message", "Deletion of contributor with ID=" + contributorId + " was successful.");
+	} //(VIDEO 14-5 Delete Contributor)
 }

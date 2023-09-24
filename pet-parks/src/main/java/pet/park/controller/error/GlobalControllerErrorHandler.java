@@ -30,6 +30,21 @@ public class GlobalControllerErrorHandler {
 		private String uri;
 	}
 
+	@ExceptionHandler(UnsupportedOperationException.class)
+	@ResponseStatus(code = HttpStatus.METHOD_NOT_ALLOWED)
+	public ExceptionMessage handleUnsupportedOperationException(UnsupportedOperationException ex,
+			WebRequest webRequest) {
+		return buildExceptionMessage(ex, HttpStatus.METHOD_NOT_ALLOWED, webRequest, LogStatus.MESSAGE_ONLY);
+	} // (VIDEO 14-5 Delete Contributor) - unsupported exception to delete all
+		// contributors
+
+	@ExceptionHandler(Exception.class)
+	@ResponseStatus(code = HttpStatus.INTERNAL_SERVER_ERROR)
+	public ExceptionMessage handldeException(Exception ex, WebRequest webRequest) {
+		return buildExceptionMessage(ex, HttpStatus.INTERNAL_SERVER_ERROR, webRequest, LogStatus.STACK_TRACE);
+	} // (VIDEO 14-5 Delete Contributor) - unsupported exception to delete all
+		// contributors
+
 	@ExceptionHandler(NoSuchElementException.class)
 	@ResponseStatus(code = HttpStatus.NOT_FOUND)
 	public ExceptionMessage handleNoSuchElementException(NoSuchElementException ex, WebRequest webRequest) {

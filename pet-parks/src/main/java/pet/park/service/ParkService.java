@@ -71,9 +71,16 @@ public class ParkService {
 		return response;
 	} // (VIDEO 14-2 Retrieve Contributor) - retrieve all contributors in list
 
+	@Transactional(readOnly = true)
 	public ContributorData retrieveContributorById(Long contributorId) {
 		Contributor contributor = findContributorById(contributorId);
 		return new ContributorData(contributor);
 	} // (VIDEO 14-2 Retrieve Contributor) - retrieve one contributor at a time by ID
+
+	@Transactional(readOnly = false)
+	public void deleteContributorById(Long contributorId) {
+		Contributor contributor = findContributorById(contributorId);
+		contributorDao.delete(contributor);
+	} //(VIDEO 14-5 Delete Contributor) - delete contributor method
 
 }

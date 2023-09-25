@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import lombok.extern.slf4j.Slf4j;
 import pet.park.controller.model.ContributorData;
+import pet.park.controller.model.PetParkData;
 import pet.park.service.ParkService;
 
 @RestController
@@ -54,13 +55,6 @@ public class ParkController {
 	} // (VIDEO 14-2 Retrieve contributors) -> method to retrieve one contributor at a
 		// time by ID
 
-	@DeleteMapping("/contributor")
-	public void deleteAllContributors() {
-		log.info("Attempting to delete all contributors");
-		throw new UnsupportedOperationException("Deleting all contributors is not allowed.");
-	} // (VIDEO 14-5 Delete Contributor) -> Preventing user from deleting all
-		// contributors
-
 	@DeleteMapping("/contributor/{contributorId}")
 	public Map<String, String> deleteContributorById(@PathVariable Long contributorId) {
 		log.info("Deleting contributor with ID =", contributorId);
@@ -68,5 +62,32 @@ public class ParkController {
 		parkService.deleteContributorById(contributorId);
 
 		return Map.of("message", "Deletion of contributor with ID=" + contributorId + " was successful.");
-	} //(VIDEO 14-5 Delete Contributor)
+	} // (VIDEO 14-5 Delete Contributor) Delete one at a time by ID
+
+	@DeleteMapping("/contributor")
+	public void deleteAllContributors() {
+		log.info("Attempting to delete all contributors");
+		throw new UnsupportedOperationException("Deleting all contributors is not allowed.");
+	} // (VIDEO 14-5 Delete Contributor) -> Preventing user from deleting all
+		// contributors
+
+	@PostMapping("/contributor/{contributorId}/park")
+	@ResponseStatus(code = HttpStatus.CREATED)
+	public PetParkData insertPetPark(@PathVariable Long contributorId, @RequestBody PetParkData petParkData) {
+		log.info("Creating park {} for contributor wih ID={}", petParkData, contributorId);
+
+		return parkService.savePetPark(contributorId, petParkData);
+	} // (14-6 Create Location VIDEO) controller method for insertPetPark
+
+	@PutMapping("/contributor/{contributorId}/park/{parkId}")
+	public PetParkData updatePetPark(@PathVariable Long contributorId, @PathVariable Long parkId,
+			@RequestBody PetParkData petParkData) {
+
+		petParkData.setPetParkId(parkId);
+		log.info("Creating park {} for contributor wih ID={}", petParkData, contributorId);
+
+		return parkService.savePetPark(contributorId, petParkData);
+
+	} // (14-6 Create Location VIDEO) controller method for update pet park
+
 }

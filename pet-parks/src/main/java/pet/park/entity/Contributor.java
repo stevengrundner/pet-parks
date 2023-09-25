@@ -18,16 +18,16 @@ import lombok.ToString;
 public class Contributor {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long contributorId; 
-	
+	private Long contributorId;
+
 	private String contributorName;
-	
+
 	@Column(unique = true)
 	private String contributorEmail;
-	
+
 	@EqualsAndHashCode.Exclude
 	@ToString.Exclude
 	@OneToMany(mappedBy = "contributor", cascade = CascadeType.ALL)
 	private Set<PetPark> petParks = new HashSet<>();
-	
+
 }

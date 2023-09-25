@@ -90,4 +90,12 @@ public class ParkController {
 
 	} // (14-6 Create Location VIDEO) controller method for update pet park
 
+	@GetMapping("/contributor/{contributorId}/park/{parkId}")
+	public PetParkData retrievePetParkById(@PathVariable Long contributorId, @PathVariable Long parkId) {
+		log.info("Retrieving pet park with ID={} for contributor with ID={}", parkId, contributorId);
+
+		return parkService.retrievePetParkById(contributorId, parkId);
+
+	}
+
 }

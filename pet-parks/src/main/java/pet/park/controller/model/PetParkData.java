@@ -43,7 +43,7 @@ public class PetParkData {
 		private Long contributorId;
 		private String contributorName;
 		private String contributorEmail;
-		
+
 		public PetParkContributor(Contributor contributor) {
 			contributorId = contributor.getContributorId();
 			contributorName = contributor.getContributorName();

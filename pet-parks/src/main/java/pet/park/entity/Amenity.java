@@ -25,5 +25,4 @@ public class Amenity {
 	@ManyToMany(mappedBy = "amenities")
 	private Set<PetPark> petParks = new HashSet<>();
 
-	
 }

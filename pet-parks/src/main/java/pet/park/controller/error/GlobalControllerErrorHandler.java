@@ -30,6 +30,12 @@ public class GlobalControllerErrorHandler {
 		private String uri;
 	}
 
+	@ExceptionHandler(IllegalStateException.class)
+	@ResponseStatus(code = HttpStatus.BAD_REQUEST)
+	public ExceptionMessage handleIllegalStateException(IllegalStateException ex, WebRequest webRequest) {
+		return buildExceptionMessage(ex, HttpStatus.BAD_REQUEST, webRequest, LogStatus.MESSAGE_ONLY);
+	} // (14-7 Retrieve Pet Park VIDEO)
+
 	@ExceptionHandler(UnsupportedOperationException.class)
 	@ResponseStatus(code = HttpStatus.METHOD_NOT_ALLOWED)
 	public ExceptionMessage handleUnsupportedOperationException(UnsupportedOperationException ex,
